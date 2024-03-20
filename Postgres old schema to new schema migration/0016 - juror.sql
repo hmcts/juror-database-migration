@@ -69,7 +69,7 @@ with last_updated as (
 	where p.read_only = 'N')
 	
 , target as (
-	insert into juror_mod.juror(juror_number,poll_number,title,last_name,first_name,dob,address_line_1,address_line_2,address_line_3,address_line_4,address_line_5,postcode,h_phone,w_phone,w_ph_local,responded,date_excused,excusal_code,acc_exc,date_disq,disq_code,user_edtq,notes,no_def_pos,perm_disqual,smart_card,completion_date,sort_code,bank_acct_name,bank_acct_no,bldg_soc_roll_no,welsh,police_check,last_update,summons_file,m_phone,h_email,contact_preference,notifications,optic_reference,date_created,travel_time)
+	insert into juror_mod.juror(juror_number,poll_number,title,last_name,first_name,dob,address_line_1,address_line_2,address_line_3,address_line_4,address_line_5,postcode,h_phone,w_phone,w_ph_local,responded,date_excused,excusal_code,acc_exc,date_disq,disq_code,user_edtq,notes,no_def_pos,perm_disqual,smart_card_number,completion_date,sort_code,bank_acct_name,bank_acct_no,bldg_soc_roll_no,welsh,police_check,last_update,summons_file,m_phone,h_email,contact_preference,notifications,optic_reference,date_created,travel_time,claiming_subsistence_allowance)
 	select distinct 
 			p.part_no,
 			p.poll_number as poll_number,
@@ -104,7 +104,7 @@ with last_updated as (
 					then true
 					else false
 			end as perm_disqual,
-			p.smart_card as smart_card,
+			p.smart_card as smart_card_number,
 			p.completion_date as completion_date,
 			p.sort_code as sort_code,
 			p.bank_acct_name as bank_acct_name,
@@ -136,7 +136,8 @@ with last_updated as (
 			p.notifications as notifications,
 			null as optic_reference,
 			lu.last_update as last_update,
-			p.travel_time*'1 HOUR'::interval as travel_time_time
+			p.travel_time*'1 HOUR'::interval as travel_time_time,
+			false AS claiming_subsistence_allowance -- new "juror defaults" value, screen designs show this as defaulted to false
 	from juror.pool p
 	join last_updated lu  
 	on p.part_no = lu.part_no
