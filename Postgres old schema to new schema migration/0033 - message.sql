@@ -35,7 +35,7 @@ with target as (
 	insert into juror_mod.message(juror_number,file_datetime,username,loc_code,phone,email,pool_no,subject,message_text,message_id,message_read)
 	select distinct 
 			m.part_no,
-			to_date(left(regexp_replace(m.file_datetime, '[^0-9]+', '', 'g'), 8), 'YYYYMMDD') as file_datetime,
+			to_timestamp(m.file_datetime, 'YYYYMMDD_HH24MIss')::timestamp as file_datetime,
 			m.username,
 			m.loc_code,
 			m.phone,
