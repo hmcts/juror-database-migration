@@ -39,7 +39,7 @@ alter table juror_mod.juror_response
 truncate table juror_mod.juror_response;
 
 with target as (
- 	insert into juror_mod.juror_response (juror_number,first_name,last_name,address_line_1,address_line_2,address_line_3,address_line_4,address_line_5,postcode,alt_phone_number,bail,bail_details,completed_at,convictions,convictions_details,date_of_birth,date_received,deferral_date,deferral_reason,email,email_address,excusal_reason,juror_email_details,juror_phone_details,main_phone,mental_health_act,mental_health_act_details,other_phone,phone_number,processing_complete,processing_status,relationship,residency,residency_detail,staff_assignment_date,staff_login,thirdparty_fname,thirdparty_lname,thirdparty_other_reason,thirdparty_reason,title,urgent,super_urgent,welsh,"version",reply_type)
+ 	insert into juror_mod.juror_response (juror_number,first_name,last_name,address_line_1,address_line_2,address_line_3,address_line_4,address_line_5,postcode,alt_phone_number,bail,bail_details,completed_at,convictions,convictions_details,date_of_birth,date_received,deferral_date,deferral_reason,email,email_address,excusal_reason,juror_email_details,juror_phone_details,main_phone,mental_health_act,mental_health_act_details,other_phone,phone_number,processing_complete,processing_status,relationship,residency,residency_detail,staff_assignment_date,staff_login,thirdparty_fname,thirdparty_lname,thirdparty_other_reason,thirdparty_reason,title,urgent,super_urgent,welsh,"version",reply_type,reasonable_adjustments_arrangements)
 	select distinct 
 			jr.juror_number,
 			jr.first_name,
@@ -126,7 +126,8 @@ with target as (
 					else false
 			end,
 			jr."version",
-			'Digital' as reply_type
+			'Digital' as reply_type,
+			jr.special_needs_arrangements
 	from juror_digital.juror_response jr
 	returning 1
 )
