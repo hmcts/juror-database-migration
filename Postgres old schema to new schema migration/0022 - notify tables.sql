@@ -81,10 +81,11 @@ begin
 truncate table juror_mod.notify_template_field;
 
 with target as (
- 	insert into juror_mod.notify_template_field (convert_to_date,database_field,field_length,jd_class_name,jd_class_property,position_from,position_to,template_field,template_id,version)
+ 	insert into juror_mod.notify_template_field (id,convert_to_date,database_field,field_length,jd_class_name,jd_class_property,position_from,position_to,template_field,template_id,"version")
 	select distinct 
+			ntf.id,
 			case ntf.convert_to_date
-				when 'y'
+				when 'Y'
 					then true
 					else false
 			end as convert_to_date,
@@ -96,7 +97,7 @@ with target as (
 			ntf.position_to,
 			ntf.template_field,
 			ntf.template_id,
-			ntf.version
+			ntf."version"
 	from juror_digital.notify_template_field ntf
 	returning 1
 )
